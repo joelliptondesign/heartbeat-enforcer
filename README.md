@@ -83,6 +83,32 @@ There are two validation modes:
 - Baseline mode: requires exactly one new line since the saved baseline, then validates only that new last event.
 - Tail mode: validates only the last event in the file, with no baseline requirement.
 
+## Zero-Friction Integration
+
+Heartbeat Enforcer is designed to be automatic in practice.
+
+You do not manually write heartbeat events.
+
+Instead, you instruct your AI coding tool to append them as part of every run.
+
+Common patterns:
+
+- Add a one-line instruction to your prompt:
+
+  After completing the task, append a heartbeat event to telemetry/executor_heartbeat.jsonl.
+
+- Use a saved snippet or slash command:
+
+  /run-with-heartbeat
+
+- Configure your agent once (recommended):
+
+  Every code change must append a valid heartbeat event.
+
+After this, heartbeat logging becomes part of the execution itself, not an extra step.
+
+The responsibility for structured explanation moves from the human to the AI.
+
 ## Installation
 
 Heartbeat Enforcer has no runtime dependencies beyond Python.
