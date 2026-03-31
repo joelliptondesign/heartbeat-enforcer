@@ -2,6 +2,14 @@
 
 Deterministic validation for structured change logs produced during AI-assisted coding.
 
+AI coding tools are changing how code gets written.
+
+We already have strong systems for tracking code itself, like Git. But we don’t have an equivalent way to track the reasoning behind AI-generated changes.
+
+Heartbeat Enforcer acts as Git for AI reasoning.
+
+It enforces structured explanations for every AI-generated change — what changed, what was done, and why — so the reasoning stays with the code instead of getting lost in chat history.
+
 ## The Problem
 
 AI coding tools can change a lot of code quickly. The code changes usually survive in the repository, but the explanation for those changes often does not.
