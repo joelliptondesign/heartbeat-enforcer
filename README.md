@@ -46,6 +46,19 @@ Validation fails when the record is malformed, incomplete, refers back to outsid
 - No dependence on chat history
 - Works with any AI coding tool that can append a JSONL record
 
+## Planned vs Autonomous Actions
+
+Each operation is labeled as either `planned` or `autonomous`.
+
+- Planned: directly requested by the user
+- Autonomous: added by the AI to support or complete the task
+
+This makes it immediately visible when the AI goes beyond the original request.
+
+Instead of guessing why something was added, you get a clear, structured explanation of both the change and the reasoning behind it.
+
+This helps surface unexpected behavior early and reduces surprise changes in the codebase.
+
 ## Example
 
 Changed files:
