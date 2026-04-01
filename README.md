@@ -126,15 +126,24 @@ Without this, those extra changes would be easy to miss, misinterpret, or attrib
 
 ## How It Works
 
-1. Optionally capture the current heartbeat line count as a baseline.
-2. Run your AI coding tool.
-3. Append one new JSON event to the heartbeat file.
-4. Validate the heartbeat file, optionally checking changed-file coverage too.
+In a typical setup, this runs as part of your normal AI coding workflow.
+
+1. (Optional) Capture the current heartbeat line count as a baseline.
+
+2. Run your AI coding tool as usual.
+
+3. The AI appends exactly one new heartbeat event describing the work it just performed.
+
+4. The validator checks that event for structure, completeness, and (optionally) file coverage.
 
 There are two validation modes:
 
-- Baseline mode: requires exactly one new line since the saved baseline, then validates only that new last event.
-- Tail mode: validates only the last event in the file, with no baseline requirement.
+- Baseline mode: uses the saved line count to ensure exactly one new event was added, then validates only that event.
+- Tail mode: validates only the most recent event in the file, with no baseline requirement.
+
+In practice, steps 3 and 4 are handled automatically once your tool is configured. The developer does not manually write or maintain heartbeat records.
+
+Once configured, this becomes part of every run automatically.
 
 ## Zero-Friction Integration
 
