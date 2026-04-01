@@ -1,0 +1,53 @@
+name: Heartbeat Enforcement
+
+on:
+  pull_request:
+
+jobs:
+  validate-heartbeat:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install Heartbeat Enforcer
+        run: |
+          pip install .
+
+      - name: Fetch base branch
+        run: |
+          git fetch origin ${{ github.base_ref }}
+
+      - name: Generate changed files
+        run: |
+          git diff --name-only origin/${{ github.base_ref }}...HEAD > changed_files.txt
+
+      - name: Validate heartbeat
+        run: |
+          set +e
+          OUTPUT=$(heartbeat validate \
+            --heartbeat telemetry/executor_heartbeat.jsonl \
+            --changed-files changed_files.txt 2>&1)
+          STATUS=$?
+          set -e
+
+          echo "$OUTPUT"
+
+          if [ $STATUS -ne 0 ] || echo "$OUTPUT" | grep -q '"status": "FAIL"'; then
+            echo ""
+            echo "Heartbeat validation FAILED"
+            echo ""
+            echo "Reasons:"
+            echo "$OUTPUT" | grep -o '"failure_reasons": \[[^]]*\]' || true
+            exit 1
+          else
+            echo ""
+            echo "Heartbeat validation PASSED"
+            echo "All changes are accounted for and properly documented."
+          fi
