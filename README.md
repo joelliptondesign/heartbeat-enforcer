@@ -273,7 +273,7 @@ It also rejects malformed JSON input and empty heartbeat files.
 ## What It Does Not Do
 
 - It does not judge whether the code change is correct.
-- It does not use AI.
+- The validator itself does not use AI. All checks are deterministic.
 - It does not modify code.
 
 ## Who This Is For
